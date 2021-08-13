@@ -17,15 +17,21 @@ const Header = (props) => {
         </div>
         <div className="pr-10 hidden sm:block ">
           <ul className="flex flex-row justify-between w-80 float-right items-center h-full font-mono text-xl text-gray-600">
-            <li className="hover:text-yellow-500 cursor-pointer">
-              HOME
-            </li>
-            <li className="hover:text-yellow-500 cursor-pointer">
-              SOBRE
-            </li>
-            <li className="hover:text-yellow-500 cursor-pointer">
-              ADMIN
-            </li>
+            <a href="/">
+              <li className="hover:text-yellow-500 cursor-pointer">
+                HOME
+              </li>
+            </a>
+            <a href="/#sobre">
+              <li className="hover:text-yellow-500 cursor-pointer">
+                SOBRE
+              </li>
+            </a>
+            <a href="/admin">
+              <li className="hover:text-yellow-500 cursor-pointer">
+                ADMIN
+              </li>
+            </a>
           </ul>
         </div>
         <div className="pr-10 sm:hidden">

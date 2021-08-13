@@ -16,7 +16,7 @@ export default function Home() {
           </button>
         </div>
       </div>
-      <div class="flex flex-col items-center px-96 py-60 bg-opacity-80 w-full">
+      <div id="sobre" class="flex flex-col items-center px-96 py-60 bg-opacity-80 w-full">
         <h1 class="font-mono text-3xl text-center text-yellow-500">
           Sobre nós
         </h1>

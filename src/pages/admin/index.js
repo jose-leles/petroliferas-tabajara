@@ -74,7 +74,7 @@ export default function Admin() {
         </div>
       </div>
     </Container>
-    <Footer />
+    <Footer absolute={true}/>
   </>
   )
 }
