@@ -1,12 +1,14 @@
 import React from 'react';
 
-import { Header } from '../components';
+import { Header, Footer, Container} from '../components';
 
 export default function Home() {
   return (<>
     <Header />
-      oi
-    <div />
+    <Container>
+
+    </Container>
+    <Footer />
     </>
   )
 }
