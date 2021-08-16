@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
 
 import { Header, Footer, Container, ModalPedido } from '../../components'
+import { useAppContext } from '../../context/AppWrapper';
 import Time from '../../utils/Time';
 
 export default function Admin() {
 	const [ pedidos, setPedidos ] = useState(null);
 	const [ pedidoEditar , setPedidoEditar ] = useState(null);
 	const [ sendDataEditar , setSendDataEditar ] = useState(null);
-	const [ codigoPedidoExcluir , setCodigoPedidoExcluir ] = useState(null);
+	const [ codigoPedidoExcluir , setCodigoPedidoExcluir ] = useState(null); 
+	const {state, dispatch} =  useAppContext()
+
 
 	useEffect(() => {
 		if(sendDataEditar){
@@ -17,6 +20,14 @@ export default function Admin() {
 				headers:{"Content-Type": "application/json"}
 			}).then(result => {
 				setSendDataEditar(null);
+				dispatch({
+					type:"SHOW_TOASTER",
+					toaster: {
+						title:"Sucesso",
+						message:"Editado com sucesso",
+						status:"success"
+					}
+				})
 			})
 		}
 	},[sendDataEditar]);
@@ -27,6 +38,14 @@ export default function Admin() {
 				method: "DELETE"
 			}).then(result => {
 				setCodigoPedidoExcluir(null);
+				dispatch({
+					type:"SHOW_TOASTER",
+					toaster: {
+						title:"Sucesso",
+						message:"Deletado com sucesso",
+						status:"success"
+					}
+				})
 			})
 		}
 	},[codigoPedidoExcluir]);
@@ -34,8 +53,10 @@ export default function Admin() {
 	useEffect(() => {
 		fetch("https://petroliferas-tabajara-fakei-ap.herokuapp.com/pedido")
 		.then(result => result.json())
-		.then(json => setPedidos(json));
-	}, [])
+		.then(json => {
+			setPedidos([...json]);
+		});
+	}, [pedidoEditar, codigoPedidoExcluir])
 	
 	return (
 		<>
@@ -123,7 +144,7 @@ export default function Admin() {
 													</span>
 												</td>
 												<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-													Faltam {Time.diffInDays(pedido.dataPrazo)} dias ({Time.timestampToDDMMYYY(pedido.dataPrazo)})
+													{Time.diffTimeText(pedido.dataPrazo)} ({Time.timestampToDDMMYYY(pedido.dataPrazo)})
 												</td>
 												<td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
 													<a

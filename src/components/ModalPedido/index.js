@@ -16,7 +16,7 @@ const ModalPedido = ({
 	const [cep, setCep] = useState('')
 	const [cepResult, setCepResult] = useState({});
 
-	const [formData, setFormData] = useState({});
+	const [formData, setFormData] = useState(pedido || {});
 
 	const onSubmitForm = () => {
 		if(onSendData){
@@ -68,7 +68,7 @@ const ModalPedido = ({
 								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 								type="text"
 								placeholder="Nome"
-								value={isEdit && pedido?.nomeEmpresa}
+								value={isEdit && formData?.nomeEmpresa}
 								onChange={(event) => setFormData({ ...formData, nomeEmpresa: event.target.value })}
 
 							/>
@@ -82,7 +82,7 @@ const ModalPedido = ({
 								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 								type="text"
 								placeholder="Email"
-								value={isEdit && pedido?.emailEmpresa}
+								value={isEdit && formData?.emailEmpresa}
 								onChange={(event) => setFormData({ ...formData, emailEmpresa: event.target.value })}
 
 							/>
@@ -97,7 +97,7 @@ const ModalPedido = ({
 								className="shadow appearance-none border rounded w-44 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 								type="text"
 								placeholder="CEP"
-								value={isEdit && pedido?.cep}
+								value={isEdit && formData?.cep}
 
 							/>
 						</div>
@@ -110,7 +110,7 @@ const ModalPedido = ({
 								className="shadow appearance-none border rounded w-24 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 								type="text"
 								placeholder="Número"
-								value={isEdit && pedido?.numero}
+								value={isEdit && formData?.numero}
 								onChange={(event) => setFormData({ ...formData, numero: event.target.value })}
 
 							/>
@@ -128,7 +128,7 @@ const ModalPedido = ({
 								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 								type="text"
 								placeholder="Endereço"
-								value={cepResult?.logradouro || isEdit && pedido?.endereco}
+								value={cepResult?.logradouro || isEdit && formData?.endereco}
 								onChange={(event) => setFormData({ ...formData, endereco: event.target.value })}
 							/>
 						</div>
@@ -143,7 +143,7 @@ const ModalPedido = ({
 								id="data-desejada"
 								className="shadow appearance-none border rounded w-56 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 								type="date"
-								value={isEdit && pedido && pedido.dataPrazo && Time.timestampToDDMMYYY(pedido.dataPrazo)}
+								value={isEdit && formData && formData.dataPrazo && Time.timestampToYYYYMMDD(formData.dataPrazo)}
 								onChange={(event) => setFormData({ ...formData, dataPrazo: Time.dateToTimestamp(event.target.value) })}
 
 							/>
@@ -161,13 +161,13 @@ const ModalPedido = ({
 								onChange={(event) => setFormData({ ...formData, status: event.target.value })}
 
 							>
-								<option value="pending" selected={isEdit? pedido?.status == "pending" : false}>
+								<option value="pending" selected={isEdit? formData?.status == "pending" : false}>
 									Pendente
 								</option>
-								<option value="success" selected={isEdit? pedido?.status == "success" : false}>
+								<option value="success" selected={isEdit? formData?.status == "success" : false}>
 									Resolvido
 								</option>
-								<option value="canceled" selected={isEdit? pedido?.status == "canceled" : false}>
+								<option value="canceled" selected={isEdit? formData?.status == "canceled" : false}>
 									Cancelado
 								</option>
 							</select>
@@ -185,7 +185,7 @@ const ModalPedido = ({
 							className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 							onChange={(event) => setFormData({ ...formData, observacao: event.target.value })}
 
-						>{isEdit? pedido?.observacao : ""}</textarea>
+						>{isEdit? formData?.observacao : ""}</textarea>
 					</div>
 				</form>
 			</div>

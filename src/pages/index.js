@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 
 import { Header, Footer, Container, ModalPedido } from '../components'
+import { useAppContext } from '../context/AppWrapper';
 
 export default function Home() {
+	const {state, dispatch} =  useAppContext()
 	const [mostraModal, setMostraModal] = useState(false);
 	const [sendData, setSendData] = useState(null)
 
@@ -14,6 +16,14 @@ export default function Home() {
 				headers:{"Content-Type": "application/json"}
 			}).then(result => {
 				setSendData(null);
+				dispatch({
+					type:"SHOW_TOASTER",
+					toaster: {
+						title:"Sucesso",
+						message:"Cadastrado com sucesso",
+						status:"success"
+					}
+				})
 			})
 		}
 	},[sendData]);
