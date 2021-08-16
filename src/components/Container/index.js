@@ -9,7 +9,7 @@ const Container = (props) => {
 			{props.fullSize ? <></> : <div className="w-1/6 " />}
 			<div className={props.fullSize ? 'w-full' : 'w-4/6'}>
 				{props.children}
-				{state.toaster? <Toaster title="Sucesso" message="Cadastro com sucesso" status="success" /> : <></>}
+				{state.toaster? <Toaster title={state.toaster.title} message={state.toaster.message} status={state.toaster.status} /> : <></>}
 			</div>
 			{props.fullSize ? <></> : <div className="w-1/6 " />}
 			
