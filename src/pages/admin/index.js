@@ -1,102 +1,166 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { Header, Footer, Container } from '../../components'
+import { Header, Footer, Container, ModalPedido } from '../../components'
+import Time from '../../utils/Time';
 
 export default function Admin() {
+	const [ pedidos, setPedidos ] = useState(null);
+	const [ pedidoEditar , setPedidoEditar ] = useState(null);
+	const [ sendDataEditar , setSendDataEditar ] = useState(null);
+	const [ codigoPedidoExcluir , setCodigoPedidoExcluir ] = useState(null);
+
+	useEffect(() => {
+		if(sendDataEditar){
+			fetch("https://petroliferas-tabajara-fakei-ap.herokuapp.com/pedido", {
+				method: "POST",
+				body: JSON.stringify(sendDataEditar),
+				headers:{"Content-Type": "application/json"}
+			}).then(result => {
+				setSendDataEditar(null);
+			})
+		}
+	},[sendDataEditar]);
+
+	useEffect(() => {
+		if(codigoPedidoExcluir){
+			fetch("https://petroliferas-tabajara-fakei-ap.herokuapp.com/pedido/"+codigoPedidoExcluir, {
+				method: "DELETE"
+			}).then(result => {
+				setCodigoPedidoExcluir(null);
+			})
+		}
+	},[codigoPedidoExcluir]);
+
+	useEffect(() => {
+		fetch("https://petroliferas-tabajara-fakei-ap.herokuapp.com/pedido")
+		.then(result => result.json())
+		.then(json => setPedidos(json));
+	}, [])
+	
 	return (
 		<>
 			<Header />
 			<Container>
-				<h1 class="font-thin mt-20 mb-16 text-4xl">
+				<h1 className="font-thin mt-20 mb-16 text-4xl">
 					Pedidos de reposição de estoque
 				</h1>
-				<div class="flex flex-col my-2.5 mb-96">
-					<div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-						<div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-							<div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-								<table class="min-w-full divide-y divide-gray-200">
-									<thead class="bg-gray-50">
+				<div className="flex flex-col my-2.5 mb-96">
+					<div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+						<div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+							<div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+								<table className="min-w-full divide-y divide-gray-200">
+									<thead className="bg-gray-50">
 										<tr>
 											<th
 												scope="col"
-												class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+												className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
 											>
 												Empresa
 											</th>
 											<th
 												scope="col"
-												class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+												className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
 											>
 												Endereço
 											</th>
 											<th
 												scope="col"
-												class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+												className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
 											>
 												Status
 											</th>
 											<th
 												scope="col"
-												class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+												className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
 											>
 												Prazo Máx.
 											</th>
-											<th scope="col" class="relative px-6 py-3">
-												<span class="sr-only">Atender</span>
+											<th scope="col" className="relative px-6 py-3">
+												<span className="sr-only">Atender</span>
 											</th>
 										</tr>
 									</thead>
-									<tbody class="bg-white divide-y divide-gray-200">
-										<tr>
-											<td class="px-6 py-4 whitespace-nowrap">
-												<div class="flex items-center">
-													<div class="flex-shrink-0 h-10 w-10">
-														<img
-															class="h-10 w-10 rounded-full"
-															src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy9QDJhzwiQOWmxnU88NomgAKPJ2vF4min-JP0eJhJ1HhRGoUWFi99tJ4yH6ujbAjEMsk&usqp=CAU"
-															alt=""
-														/>
-													</div>
-													<div class="ml-4">
-														<div class="text-sm font-medium text-gray-900">
-															Posto Shell
+									<tbody className="bg-white divide-y divide-gray-200">
+										{ pedidos && pedidos.map( pedido => 
+											<tr>
+												<td className="px-6 py-4 whitespace-nowrap">
+													<div className="flex items-center">
+														<div className="flex-shrink-0 h-10 w-10">
+															<img
+																className="h-10 w-10 rounded-full"
+																src={pedido.empresaImg}
+																alt=""
+															/>
 														</div>
-														<div class="text-sm text-gray-500">
-															posto@shell.com
+														<div className="ml-4">
+															<div className="text-sm font-medium text-gray-900">
+																{pedido.nomeEmpresa}
+															</div>
+															<div className="text-sm text-gray-500">
+																{pedido.emailEmpresa}
+															</div>
 														</div>
 													</div>
-												</div>
-											</td>
-											<td class="px-6 py-4 whitespace-nowrap">
-												<div class="text-sm text-gray-900">
-													Rua Sábado D’Angelo, 2134 - Itaquera, São Paulo - SP,
-													08210-791
-												</div>
-												<div class="text-sm text-gray-500">CEP: 45584-454</div>
-											</td>
-											<td class="px-6 py-4 whitespace-nowrap">
-												<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-													Pendente
-												</span>
-											</td>
-											<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-												Faltam 15 dias (28/08/2021)
-											</td>
-											<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-												<a
-													href="#"
-													class="text-indigo-600 hover:text-indigo-900"
-												>
-													Atender
-												</a>
-											</td>
-										</tr>
+												</td>
+												<td className="px-6 py-4 whitespace-nowrap">
+													<div className="text-sm text-gray-900">
+														{pedido.endereco}
+													</div>
+													<div className="text-sm text-gray-500">CEP: {pedido.cep}</div>
+												</td>
+												<td className="px-6 py-4 whitespace-nowrap">
+													<span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+															pedido.status == "pending" ? "bg-yellow-100 text-yellow-800" :
+															pedido.status == "success" ? "bg-green-100 text-green-800" :
+															"bg-red-100 text-red-800"}`
+															
+														}>
+														{
+															pedido.status == "pending" ? "Pendente" :
+															pedido.status == "success" ? "Resolvido" :
+															"Cancelado"
+														} 
+													</span>
+												</td>
+												<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+													Faltam {Time.diffInDays(pedido.dataPrazo)} dias ({Time.timestampToDDMMYYY(pedido.dataPrazo)})
+												</td>
+												<td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+													<a
+														href="#"
+														className="text-blue-600 hover:text-blue-900"
+														onClick={ () => setPedidoEditar(pedido) }
+													>
+														Editar
+													</a>
+													<a
+														href="#"
+														className="ml-5 text-red-600 hover:text-red-900"
+														onClick={ () => setCodigoPedidoExcluir(pedido.codigo) }
+													>
+														Remover
+													</a>
+												</td>
+											</tr>
+										)}
 									</tbody>
 								</table>
 							</div>
 						</div>
 					</div>
 				</div>
+				{pedidoEditar ? 
+					<ModalPedido
+						buttonCancelAction={() => setPedidoEditar(null) } 
+						onSendData={pedido => { 
+							setSendDataEditar( { ...pedidoEditar, ...pedido })
+							setPedidoEditar(null);
+							/* toaster */
+							}
+						} 
+						isEdit={true} 
+						pedido={pedidoEditar} /> 
+				: <></>}
 			</Container>
 			<Footer absolute={true} />
 		</>
