@@ -103,7 +103,7 @@ export default function Admin() {
 									</thead>
 									<tbody className="bg-white divide-y divide-gray-200">
 										{ pedidos && pedidos.map( pedido => 
-											<tr>
+											<tr key={pedido.codigo}>
 												<td className="px-6 py-4 whitespace-nowrap">
 													<div className="flex items-center">
 														<div className="flex-shrink-0 h-10 w-10">

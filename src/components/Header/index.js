@@ -1,5 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
+import Link from 'next/link'
 
 const Header = (props) => {
 	return (
@@ -17,15 +18,15 @@ const Header = (props) => {
 				</div>
 				<div className="pr-10 hidden sm:block ">
 					<ul className="flex flex-row justify-between w-80 float-right items-center h-full font-mono text-xl text-gray-600">
-						<a href="/">
+						<Link href="/">
 							<li className="hover:text-yellow-500 cursor-pointer">HOME</li>
-						</a>
-						<a href="/#sobre">
+						</Link>
+						<Link href="/#sobre">
 							<li className="hover:text-yellow-500 cursor-pointer">SOBRE</li>
-						</a>
-						<a href="/admin">
+						</Link>
+						<Link href="/admin">
 							<li className="hover:text-yellow-500 cursor-pointer">ADMIN</li>
-						</a>
+						</Link>
 					</ul>
 				</div>
 				<div className="pr-10 sm:hidden flex-row justify-center items-center">

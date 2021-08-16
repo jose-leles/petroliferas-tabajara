@@ -59,7 +59,7 @@ const ModalPedido = ({
 						<div className="mb-4">
 							<label
 								className="block text-gray-700 text-md mb-2"
-								for="nome-empresa"
+								htmlFor="nome-empresa"
 							>
 								Nome empresa
 							</label>
@@ -74,7 +74,7 @@ const ModalPedido = ({
 							/>
 						</div>
 						<div className="mb-4">
-							<label className="block text-gray-700 text-md mb-2" for="email">
+							<label className="block text-gray-700 text-md mb-2" htmlFor="email">
 								Email
 							</label>
 							<input
@@ -88,7 +88,7 @@ const ModalPedido = ({
 							/>
 						</div>
 						<div className="mb-4">
-							<label className="block text-gray-700 text-md mb-2" for="cep">
+							<label className="block text-gray-700 text-md mb-2" htmlFor="cep">
 								CEP:
 							</label>
 							<input
@@ -102,7 +102,7 @@ const ModalPedido = ({
 							/>
 						</div>
 						<div className="mb-4">
-							<label className="block text-gray-700 text-md mb-2" for="numero">
+							<label className="block text-gray-700 text-md mb-2" htmlFor="numero">
 								Numero:
 							</label>
 							<input
@@ -118,13 +118,12 @@ const ModalPedido = ({
 						<div className="mb-4">
 							<label
 								className="block text-gray-700 text-md mb-2"
-								for="endereco"
+								htmlFor="endereco"
 							>
 								Endereço:
 							</label>
 							<input
 								id="endereco"
-								value={cepResult?.logradouro}
 								className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 								type="text"
 								placeholder="Endereço"
@@ -135,7 +134,7 @@ const ModalPedido = ({
 						<div className="mb-4">
 							<label
 								className="block text-gray-700 text-md mb-2"
-								for="data-desejada"
+								htmlFor="data-desejada"
 							>
 								Data desejado para contato:
 							</label>
@@ -151,7 +150,7 @@ const ModalPedido = ({
 						{isEdit? <div className="mb-4">
 							<label
 								className="block text-gray-700 text-md mb-2"
-								for="status"
+								htmlFor="status"
 							>
 								Status:
 							</label>
@@ -176,7 +175,7 @@ const ModalPedido = ({
 					<div className="mb-4">
 						<label
 							className="block text-gray-700 text-md mb-2"
-							for="observacao"
+							htmlFor="observacao"
 						>
 							Observaçao:
 						</label>
